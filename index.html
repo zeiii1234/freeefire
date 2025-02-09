@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Free Fire?</title>
+    <style>
+        body {
+            background-color: rgb(236, 183, 218);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.5s ease-in-out;
+            width: 90%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        #yes {
+            background: rgb(179, 73, 166);
+            color: white;
+        }
+        #no {
+            background: rgb(88, 3, 72);
+            color: white;
+            position: absolute;
+        }
+        .heart {
+            position: absolute;
+            color: rgb(209, 36, 143);
+            font-size: 24px;
+            animation: floatUp 3s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-50px) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+        #message {
+            font-size: 24px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <img id="anime-girl" src="https://i.pinimg.com/736x/8e/ed/f6/8eedf607262fad50046b4939e1dda18b.jpg" alt="Anime Girl">  
+        <h1 id="question">Do you want to play Free Fire with me?</h1>
+        <button id="yes" onclick="showImageAndHearts()">Yes</button>
+        <button id="no">No</button>
+        <div id="message">Yalla Let's go!!</div>
+    </div>
+    <script>
+        const noButton = document.getElementById('no');
+        const animeGirl = document.getElementById('anime-girl');
+        const message = document.getElementById('message');
+
+        noButton.addEventListener('mouseover', function() {
+            const container = document.getElementById('main-container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonWidth = noButton.offsetWidth;
+            const buttonHeight = noButton.offsetHeight;
+            
+            let x = Math.random() * (containerRect.width - buttonWidth) + containerRect.left;
+            let y = Math.random() * (containerRect.height - buttonHeight) + containerRect.top;
+
+            x = Math.max(containerRect.left, Math.min(x, containerRect.right - buttonWidth));
+            y = Math.max(containerRect.top, Math.min(y, containerRect.bottom - buttonHeight));
+
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        });
+
+        function showImageAndHearts() {
+            animeGirl.src = "https://i.pinimg.com/736x/d1/af/7f/d1af7fa8fa207da1abbd42a905c092c6.jpg"; 
+            document.getElementById('question').style.display = "none";
+            document.getElementById('yes').style.display = "none";
+            document.getElementById('no').style.display = "none";
+            message.style.display = "block";
+            generateHearts();
+        }
+
+        function generateHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = (window.innerHeight - 50) + 'px';
+                    heart.style.fontSize = `${Math.random() * 20 + 20}px`;
+                    heart.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
